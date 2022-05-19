@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      body{
+        background-image: url("tax.png");
+        width: 10px;
+      }
+      img{width:400px;}
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+      /*taxタウンタ*/
+      tax_count = 0;
+      function tax_Click() {
+        var count_text = document.getElementById('tax_count')
+        tax_count=tax_count+10000;
+        count_text.textContent = tax_count;
+
+      }
+
+    </script>
+    <h1>
+      <span id='tax_count'></span>
+      tax
+    </h1>
+    <img onclick="tax_Click()" src="money_fly_dollar.png" alt="">
+
+  </body>
+</html>
