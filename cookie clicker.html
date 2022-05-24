@@ -18,6 +18,7 @@
       tax_count = parseInt(localStorage.getItem('c_count', 0));
       /*taxタウンタ*/
       tax_count = 0;
+
       function tax_Click(num) {
         var count_text = document.getElementById('tax_count')
         tax_count = tax_count + num;
@@ -28,39 +29,37 @@
       function cursor() {
         if (tax_count >= 15) {
           tax_count -= 15;
-        }else{
-          break;
         }
-          setInterval(tax_Click,10000,1);
+        setInterval(tax_Click,10000,1);
 
       }
 
       function grandma(){
         if (tax_count >= 100){
           tax_count -= 100;
-        setInterval(tax_Click,1000,1);
         }
+        setInterval(tax_Click,1000,1);
       }
 
       function farm(){
         if (tax_count >= 1100){
           tax_count -= 1100;
-        setInterval(tax_Click,1000,8);
         }
+        setInterval(tax_Click,1000,8);
       }
 
       function mine(){
         if (tax_count >= 12000){
           tax_count -= 12000;
-        setInterval(tax_Click,1000,47);
         }
+        setInterval(tax_Click,1000,47);
       }
 
       function factory(){
         if (tax_count >= 130000){
           tax_count -= 130000;
-        setInterval(tax_Click,1000,260);
         }
+        setInterval(tax_Click,1000,260);
       }
 
 
