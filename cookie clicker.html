@@ -5,29 +5,78 @@
     <title></title>
     <style media="screen">
       body{
-        background-image: url("tax.png");
-        width: 10px;
+        background-image: url("pastel.jpg");
+        background-size: 50%;
       }
       img{width:400px;}
+      h1{color: #2196F3;}
     </style>
   </head>
   <body>
     <script type="text/javascript">
+      localStorage.setItem('c_count', 0);
+      tax_count = parseInt(localStorage.getItem('c_count', 0));
       /*taxタウンタ*/
       tax_count = 0;
-      function tax_Click() {
+      function tax_Click(num) {
         var count_text = document.getElementById('tax_count')
-        tax_count=tax_count+10000;
+        tax_count = tax_count + num;
         count_text.textContent = tax_count;
 
       }
 
+      function cursor() {
+        if (tax_count >= 15) {
+          tax_count -= 15;
+        }else{
+          break;
+        }
+          setInterval(tax_Click,10000,1);
+
+      }
+
+      function grandma(){
+        if (tax_count >= 100){
+          tax_count -= 100;
+        setInterval(tax_Click,1000,1);
+        }
+      }
+
+      function farm(){
+        if (tax_count >= 1100){
+          tax_count -= 1100;
+        setInterval(tax_Click,1000,8);
+        }
+      }
+
+      function mine(){
+        if (tax_count >= 12000){
+          tax_count -= 12000;
+        setInterval(tax_Click,1000,47);
+        }
+      }
+
+      function factory(){
+        if (tax_count >= 130000){
+          tax_count -= 130000;
+        setInterval(tax_Click,1000,260);
+        }
+      }
+
+
     </script>
     <h1>
       <span id='tax_count'></span>
-      tax
+      円
     </h1>
-    <img onclick="tax_Click()" src="money_fly_dollar.png" alt="">
+    <img onclick="tax_Click(1)" src="money_fly_dollar.png" alt="">
+    <ul>
+      <li onclick="cursor()">カーソル</li>
+      <li onclick="grandma()">グランマ</li>
+      <li onclick="farm()">ファーム</li>
+      <li onclick="mine()">マイン</li>
+      <li onclick="factory()">ファクトリー</li>
+    </ul>
 
   </body>
 </html>
