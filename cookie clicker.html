@@ -4,68 +4,81 @@
     <meta charset="utf-8">
     <title></title>
     <style media="screen">
+    h1{color: #2196F3;}
       body{
         background-image: url("pastel.jpg");
-        background-size: 50%;
+        background-size: cover;
       }
       img{width:400px;}
-      h1{color: #2196F3;}
     </style>
   </head>
   <body>
     <script type="text/javascript">
-      localStorage.setItem('c_count', 0);
-      tax_count = parseInt(localStorage.getItem('c_count', 0));
-      /*taxタウンタ*/
-      tax_count = 0;
+
+      let ls_count = localStorage.getItem('ls_count');
+      console.log(ls_count);
+      if(ls_count){
+        tax_count = parseInt(ls_count);
+      } else {
+        tax_count = 0;
+      }
+
+      setInterval(save_action,1000);
+      function save_action(){
+        localStorage.setItem('ls_count',tax_count);
+      }
+
+      setInterval(screen_update,0);
+      function screen_update() {
+        var count_text = document.getElementById('tax_count');
+        count_text.textContent = tax_count;
+      }
 
       function tax_Click(num) {
-        var count_text = document.getElementById('tax_count')
         tax_count = tax_count + num;
-        count_text.textContent = tax_count;
 
       }
 
       function cursor() {
         if (tax_count >= 15) {
           tax_count -= 15;
-        }
         setInterval(tax_Click,10000,1);
+        }
 
       }
 
       function grandma(){
         if (tax_count >= 100){
           tax_count -= 100;
-        }
         setInterval(tax_Click,1000,1);
+        }
       }
 
       function farm(){
         if (tax_count >= 1100){
           tax_count -= 1100;
-        }
         setInterval(tax_Click,1000,8);
+        }
       }
 
       function mine(){
         if (tax_count >= 12000){
           tax_count -= 12000;
-        }
         setInterval(tax_Click,1000,47);
+        }
       }
 
       function factory(){
         if (tax_count >= 130000){
           tax_count -= 130000;
-        }
         setInterval(tax_Click,1000,260);
+        }
       }
 
 
     </script>
     <h1>
-      <span id='tax_count'></span>
+    <span id='tax_count'></span>
       円
     </h1>
     <img onclick="tax_Click(1)" src="money_fly_dollar.png" alt="">
