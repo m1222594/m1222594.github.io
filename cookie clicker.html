@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
     <meta charset="utf-8">
     <title></title>
     <style media="screen">
-    h1{color: #2196F3;}
+    p{color: #2196F3;}
       body{
         background-image: url("pastel.jpg");
         background-size: cover;
       }
       img{width:400px;}
+      .container{display:flex;}
+      .item1{ flex-grow:2;}
+      .item2{ flex-grow:4;}
+      .item3{ flex-grow:3;}
     </style>
   </head>
   <body>
@@ -28,13 +36,22 @@
         localStorage.setItem('ls_count',tax_count);
       }
 
-      setInterval(screen_update,0);
+      su_event_id = setInterval(screen_update,100);
       function screen_update() {
         var count_text = document.getElementById('tax_count');
         count_text.textContent = tax_count;
       }
 
+      function event_clear() {
+        clearInterval(su_event_id);
+      }
+
       function tax_Click(num) {
+        var tax_img = document.getElementById('tax_img');
+        tax_img.classList.remove('animate__animated','animate__shakeX');
+        void tax_img.offsetWidth;
+        tax_img.classList.add('animate__animated','animate__shakeX');
+
         tax_count = tax_count + num;
 
       }
@@ -77,18 +94,31 @@
 
 
     </script>
-    <h1>
-    <span id='tax_count'></span>
-      円
-    </h1>
-    <img onclick="tax_Click(1)" src="money_fly_dollar.png" alt="">
-    <ul>
-      <li onclick="cursor()">カーソル</li>
-      <li onclick="grandma()">グランマ</li>
-      <li onclick="farm()">ファーム</li>
-      <li onclick="mine()">マイン</li>
-      <li onclick="factory()">ファクトリー</li>
-    </ul>
+      <div class="container">
+        <div class="item1">
+          <button id="screen_switch" onclick="event_clear()" type="button" name="button">更新切り替え</button>
+          <p>
+            <span id='tax_count'></span> 円
+          </p>
+          <img  id="tax_img" onclick="tax_Click(1)" src="money_fly_dollar.png" alt="">
+        </div>
+
+        <div class="item2">
+          <p class="animate__animated animate__bounce">納税途中</p>
+        </div>
+
+        <div class="item3">
+          <ul>
+            <li onclick="cursor()">カーソル</li>
+            <li onclick="grandma()">グランマ</li>
+            <li onclick="farm()">ファーム</li>
+            <li onclick="mine()">マイン</li>
+            <li onclick="factory()">ファクトリー</li>
+          </ul>
+
+        </div>
+
+      </div>
 
   </body>
 </html>
