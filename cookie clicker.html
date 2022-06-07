@@ -12,16 +12,31 @@
       body{
         background-image: url("pastel.jpg");
         background-size: cover;
+        margin: 0;
       }
       img{width:400px;}
-      .container{display:flex;}
-      .item1{ flex-grow:2;}
-      .item2{ flex-grow:4;}
-      .item3{ flex-grow:3;}
+      .container{display:flex;
+                 height: 100vh;
+                }
+      .item1{
+              flex-grow:2;
+              background-color: blue;
+            }
+      .item2{
+              flex-grow:4;
+              background-color: yellow;
+            }
+      .item3{
+              flex-grow:3;
+              background-color: red;
+            }
     </style>
   </head>
   <body>
     <script type="text/javascript">
+
+      /*インターバルIDの格納先*/
+      let event_ids = [];
 
       let ls_count = localStorage.getItem('ls_count');
       console.log(ls_count);
@@ -59,39 +74,46 @@
       function cursor() {
         if (tax_count >= 15) {
           tax_count -= 15;
-        setInterval(tax_Click,10000,1);
+          let r_id = setInterval(tax_Click,100,1);
+          event_ids.push(r_id);
+          /*event_ids.push(setInterval(tax_Click,10000,1));*/
         }
+      }
 
+      function sell_cursor() {
+        if(event_ids.length > 0){
+          let r_id = event_ids.pop();
+          clearInterval(r_id);
+        }
       }
 
       function grandma(){
         if (tax_count >= 100){
           tax_count -= 100;
-        setInterval(tax_Click,1000,1);
+          setInterval(tax_Click,1000,1);
         }
       }
 
       function farm(){
         if (tax_count >= 1100){
           tax_count -= 1100;
-        setInterval(tax_Click,1000,8);
+          setInterval(tax_Click,1000,8);
         }
       }
 
       function mine(){
         if (tax_count >= 12000){
           tax_count -= 12000;
-        setInterval(tax_Click,1000,47);
+          setInterval(tax_Click,1000,47);
         }
       }
 
       function factory(){
         if (tax_count >= 130000){
           tax_count -= 130000;
-        setInterval(tax_Click,1000,260);
+          setInterval(tax_Click,1000,260);
         }
       }
-
 
     </script>
       <div class="container">
@@ -108,12 +130,21 @@
         </div>
 
         <div class="item3">
+          購入
           <ul>
             <li onclick="cursor()">カーソル</li>
             <li onclick="grandma()">グランマ</li>
             <li onclick="farm()">ファーム</li>
             <li onclick="mine()">マイン</li>
             <li onclick="factory()">ファクトリー</li>
+          </ul>
+          売却
+          <ul>
+            <li onclick="sell_cursor()">カーソル</li>
+            <li onclick="sell_grandma()">グランマ</li>
+            <li onclick="sell_farm()">ファーム</li>
+            <li onclick="sell_mine()">マイン</li>
+            <li onclick="sell_factory()">ファクトリー</li>
           </ul>
 
         </div>
