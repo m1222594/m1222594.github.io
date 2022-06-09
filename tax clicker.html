@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+    p{color: #2196F3;}
+      body{
+        background-image: url("pastel.jpg");
+        background-size: cover;
+        margin: 0;
+      }
+      img{width:400px;}
+      .container{display:flex;
+                 height: 100vh;
+                }
+      .item1{
+              flex-grow:2;
+              background-color: blue;
+            }
+      .item2{
+              flex-grow:4;
+              background-color: yellow;
+            }
+      .item3{
+              flex-grow:3;
+              background-color: red;
+            }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+
+      /*インターバルIDの格納先*/
+      let event_ids = [];
+
+      let ls_count = localStorage.getItem('ls_count');
+      console.log(ls_count);
+      if(ls_count){
+        tax_count = parseInt(ls_count);
+      } else {
+        tax_count = 0;
+      }
+
+      setInterval(save_action,1000);
+      function save_action(){
+        localStorage.setItem('ls_count',tax_count);
+      }
+
+      su_event_id = setInterval(screen_update,100);
+      function screen_update() {
+        var count_text = document.getElementById('tax_count');
+        count_text.textContent = tax_count;
+      }
+
+      function event_clear() {
+        clearInterval(su_event_id);
+      }
+
+      function tax_Click(num) {
+        var tax_img = document.getElementById('tax_img');
+        tax_img.classList.remove('animate__animated','animate__shakeX');
+        void tax_img.offsetWidth;
+        tax_img.classList.add('animate__animated','animate__shakeX');
+
+        tax_count = tax_count + num;
+
+      }
+
+      function cursor() {
+        if (tax_count >= 15) {
+          tax_count -= 15;
+          let r_id = setInterval(tax_Click,100,1);
+          event_ids.push(r_id);
+          /*event_ids.push(setInterval(tax_Click,10000,1));*/
+        }
+      }
+
+      function sell_cursor() {
+        if(event_ids.length > 0){
+          let r_id = event_ids.pop();
+          clearInterval(r_id);
+        }
+      }
+
+      function grandma(){
+        if (tax_count >= 100){
+          tax_count -= 100;
+          setInterval(tax_Click,1000,1);
+        }
+      }
+
+      function farm(){
+        if (tax_count >= 1100){
+          tax_count -= 1100;
+          setInterval(tax_Click,1000,8);
+        }
+      }
+
+      function mine(){
+        if (tax_count >= 12000){
+          tax_count -= 12000;
+          setInterval(tax_Click,1000,47);
+        }
+      }
+
+      function factory(){
+        if (tax_count >= 130000){
+          tax_count -= 130000;
+          setInterval(tax_Click,1000,260);
+        }
+      }
+
+      /*施設切り替え処理*/
+      function buildings_switch() {
+        let list_ele = document.getElementById('buildings_buy');
+        list_ele.style.display = 'none';
+      }
+
+    </script>
+      <div class="container">
+        <div class="item1">
+          <button id="screen_switch" onclick="event_clear()" type="button" name="button">更新切り替え</button>
+          <p>
+            <span id="tax_count"></span> 円
+          </p>
+          <img  id="tax_img" onclick="tax_Click(1)" src="money_fly_dollar.png" alt="">
+        </div>
+
+        <div class="item2">
+          <p class="animate__animated animate__bounce">納税途中</p>
+        </div>
+
+        <div class="item3">
+          <div id = "buildings_buy">
+            <span onclick="buildings_switch()">購入</span>
+            <ul>
+              <li onclick="cursor()">カーソル</li>
+              <li onclick="grandma()">グランマ</li>
+              <li onclick="farm()">ファーム</li>
+              <li onclick="mine()">マイン</li>
+              <li onclick="factory()">ファクトリー</li>
+            </ul>
+          </div>
+
+          <div id = "buildings_sell">
+            <span onclick="buildings_switch()">売却</span>
+            <ul>
+              <li onclick="sell_cursor()">カーソル</li>
+              <li onclick="sell_grandma()">グランマ</li>
+              <li onclick="sell_farm()">ファーム</li>
+              <li onclick="sell_mine()">マイン</li>
+              <li onclick="sell_factory()">ファクトリー</li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+
+  </body>
+</html>
