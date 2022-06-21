@@ -50,6 +50,42 @@
         tax_count = 0;
       }
 
+      class Building{
+        //初期値の定義
+        constructor(time,num){
+          this.event_ids = [];
+          this.interval_time = time;
+          this.add_num = num;
+        }
+
+        //カウントアップのメソッド
+        count_up(num){
+          count += num;
+        }
+
+        //購入した場合のメソッド
+        buy(){
+          let self = this;
+          let return_id = setInterval(function(){
+            self.count_up(self.add_num);
+          },1000);
+          this.event_ids.push(return_id);
+        }
+
+        //売却のメソッド
+        sell(){
+          let return_id = this.event_ids.pop();
+          clearInterval(return_id);
+        }
+      }
+
+      //各施設のオブジェクトをクラスから生成
+      let cursor = new Building(10000,1);
+      let grandma = new Building(1000,1);
+      let farm = new Building(1000,8);
+      let mine = new Building(1000,20);
+      let factory = new Building(1000,260);
+
       setInterval(save_action,1000);
       function save_action(){
         localStorage.setItem('ls_count',tax_count);
@@ -75,13 +111,13 @@
 
       }
 
-      function cursor() {
+/*      function cursor() {
         if (tax_count >= 15) {
           tax_count -= 15;
           let r_id = setInterval(tax_Click,100,1);
           event_ids.push(r_id);
           /*event_ids.push(setInterval(tax_Click,10000,1));*/
-        }
+/*        }
       }
 
       function sell_cursor() {
@@ -151,22 +187,22 @@
           <div id = "buildings_buy">
             <span onclick="buildings_switch()">購入</span>
             <ul>
-              <li onclick="cursor()">カーソル</li>
-              <li onclick="grandma()">グランマ</li>
-              <li onclick="farm()">ファーム</li>
-              <li onclick="mine()">マイン</li>
-              <li onclick="factory()">ファクトリー</li>
+              <li onclick="cursor.buy()">カーソル</li>
+              <li onclick="grandma.buy()">グランマ</li>
+              <li onclick="farm.buy()">ファーム</li>
+              <li onclick="mine.buy()">マイン</li>
+              <li onclick="factory.buy()">ファクトリー</li>
             </ul>
           </div>
 
           <div id = "buildings_sell">
             <span onclick="buildings_switch()">売却</span>
             <ul>
-              <li onclick="sell_cursor()">カーソル</li>
-              <li onclick="sell_grandma()">グランマ</li>
-              <li onclick="sell_farm()">ファーム</li>
-              <li onclick="sell_mine()">マイン</li>
-              <li onclick="sell_factory()">ファクトリー</li>
+              <li onclick="cursor.sell()">カーソル</li>
+              <li onclick="grandma.sell()">グランマ</li>
+              <li onclick="farm.sell()">ファーム</li>
+              <li onclick="mine.sell()">マイン</li>
+              <li onclick="factory.sell()">ファクトリー</li>
             </ul>
           </div>
 
