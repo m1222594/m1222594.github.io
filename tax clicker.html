@@ -52,24 +52,33 @@
 
       class Building{
         //初期値の定義
-        constructor(time,num){
+        constructor(time,num,cost){
           this.event_ids = [];
           this.interval_time = time;
           this.add_num = num;
+          this.cost = cost;
         }
 
         //カウントアップのメソッド
         count_up(num){
-          count += num;
+          var tax_img = document.getElementById('tax_img');
+          tax_img.classList.remove('animate__animated','animate__shakeX');
+          void tax_img.offsetWidth;
+          tax_img.classList.add('animate__animated','animate__shakeX');
+
+          tax_count += num;
         }
 
         //購入した場合のメソッド
         buy(){
-          let self = this;
-          let return_id = setInterval(function(){
-            self.count_up(self.add_num);
-          },1000);
-          this.event_ids.push(return_id);
+          if (tax_count >= this.cost) {
+            tax_count -= this.cost;
+            let self = this;
+            let return_id = setInterval(function(){
+              self.count_up(self.add_num);
+            },self.interval_time);
+            this.event_ids.push(return_id);
+          }
         }
 
         //売却のメソッド
@@ -80,11 +89,11 @@
       }
 
       //各施設のオブジェクトをクラスから生成
-      let cursor = new Building(10000,1);
-      let grandma = new Building(1000,1);
-      let farm = new Building(1000,8);
-      let mine = new Building(1000,20);
-      let factory = new Building(1000,260);
+      let cursor = new Building(10000,1,10);
+      let grandma = new Building(1000,1,100);
+      let farm = new Building(1000,8,1100);
+      let mine = new Building(1000,20,12000);
+      let factory = new Building(1000,260,130000);
 
       setInterval(save_action,1000);
       function save_action(){
