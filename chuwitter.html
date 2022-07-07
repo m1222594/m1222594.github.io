@@ -24,9 +24,55 @@
           }
       .icon{width:70px;}
       .icon img{
-            width:100px;
+            width:50px;
             border-radius: 50%;
           }
+      .username{font-weight: bold;}
+      .name{padding-left:5px;
+            font-weight: lighter;
+            color:gray;
+          }
+      .date{padding-left:5px;
+            font-weight: lighter;
+            color:gray;
+          }
+      .date::before {
+            content: "- ";
+          }
+      .text{padding-top:3px;
+            padding-bottom:5px;
+            font-family: 'ＭＳ Ｐゴシック','ＭＳＰゴシック','MSPゴシック','MS Pゴシック';
+            font-size: 16px;
+            line-height: 18px;
+            word-break: break-all;
+          }
+      .action{display:flex;}
+      .action span{width:25%;}
+      .icon_chat{
+            padding-left:35px;
+            background-image: url(./img/chat.svg);
+            background-size: contain;
+            background-repeat: no-repeat;
+          }
+      .icon_fav{
+            padding-left:35px;
+            background-image: url(./img/fav.svg);
+            background-size: contain;
+            background-repeat: no-repeat;
+          }
+      .icon_res{
+            padding-left:35px;
+            background-image: url(./img/res.svg);
+            background-size: contain;
+            background-repeat: no-repeat;
+          }
+      .icon_share{
+            padding-left:35px;
+            background-image: url(./img/share.svg);
+            background-size: contain;
+            background-repeat: no-repeat;
+          }
+
 
     </style>
   </head>
@@ -40,6 +86,25 @@
           </div>
 
           <div class="tweet_box">
+            <div class="username">
+              ユーザー名
+              <span class="name">@daiki</span>
+              <span class="date">2022/7/5</span>
+            </div>
+
+            <div class="text">
+              ついーとのないようをここにきじゅつする
+              abcdefghijklmnopqrstuvwxyz
+              ABCDEFGHIJKLMNOPQRSTUVWXYZ
+            </div>
+
+            <div class="action">
+              <span class="icon_chat">0</span>
+              <span class="icon_fav">0</span>
+              <span class="icon_res">0</span>
+              <span class="icon_share">0</span>
+
+            </div>
 
           </div>
 
@@ -48,6 +113,50 @@
       </div>
 
     </div>
+
+    <script type="text/javascript">
+
+      let timeline = document.getElementById('timeline');
+      let tweets = [{"text":"こんにちは","username":"gengen"},
+                   {"text":"おはよう","username":"genmai"},
+                   {"text":"OTNTN","username":"gen"},
+                   {"text":"リボ","username":"genta"},
+                   {"text":"ラッキーエアー","username":"genji"},
+                   {"text":"インパクトフラッシュ","username":"gensan"},
+                 ];
+      tweets.forEach((tweet,i) => {
+        let template =`<div class="tweet">
+          <div class="icon">
+            <img src="./gogolumpj.webp" alt="">
+
+          </div>
+
+          <div class="tweet_box">
+            <div class="username">
+              ${tweet.username}
+              <span class="name">@daiki</span>
+              <span class="date">2022/7/5</span>
+            </div>
+
+            <div class="text">
+              ${tweet.text}
+            </div>
+
+            <div class="action">
+              <span class="icon_chat">0</span>
+              <span class="icon_fav">0</span>
+              <span class="icon_res">0</span>
+              <span class="icon_share">0</span>
+
+            </div>
+
+          </div>
+
+        </div>`
+        timeline.innerHTML = timeline.innerHTML + template;
+      });
+
+    </script>
 
   </body>
 </html>
