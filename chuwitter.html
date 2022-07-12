@@ -80,34 +80,8 @@
     <div class="container">
       <div id="timeline">
         <div class="tweet">
-          <div class="icon">
-            <img src="./gogolumpj.webp" alt="">
-
-          </div>
-
-          <div class="tweet_box">
-            <div class="username">
-              ユーザー名
-              <span class="name">@daiki</span>
-              <span class="date">2022/7/5</span>
-            </div>
-
-            <div class="text">
-              ついーとのないようをここにきじゅつする
-              abcdefghijklmnopqrstuvwxyz
-              ABCDEFGHIJKLMNOPQRSTUVWXYZ
-            </div>
-
-            <div class="action">
-              <span class="icon_chat">0</span>
-              <span class="icon_fav">0</span>
-              <span class="icon_res">0</span>
-              <span class="icon_share">0</span>
-
-            </div>
-
-          </div>
-
+          <input type="text" id=input_text placeholder="ここに入力してください" name="" value=""/>
+          <button onclick="form_tweet()" type="submit"> 返信</button>
         </div>
 
       </div>
@@ -117,44 +91,66 @@
     <script type="text/javascript">
 
       let timeline = document.getElementById('timeline');
-      let tweets = [{"text":"こんにちは","username":"gengen"},
+    /*  let tweets = [{"text":"こんにちは","username":"gengen"},
                    {"text":"おはよう","username":"genmai"},
                    {"text":"OTNTN","username":"gen"},
                    {"text":"リボ","username":"genta"},
                    {"text":"ラッキーエアー","username":"genji"},
                    {"text":"インパクトフラッシュ","username":"gensan"},
-                 ];
-      tweets.forEach((tweet,i) => {
-        let template =`<div class="tweet">
-          <div class="icon">
-            <img src="./gogolumpj.webp" alt="">
+                 ]; */
+      async function post_tweet(text,name,username) {
+        let send_data = "?name=" + name +"&username=" + username + "&text=" + text;
+        let res_data = await (await fetch("./tweet.rb" + send_data)).text();
+        if(res_data != "OK"){
+          alert(res_data);
+        }
+      };
 
-          </div>
+      viewTweet();
 
-          <div class="tweet_box">
-            <div class="username">
-              ${tweet.username}
-              <span class="name">@daiki</span>
-              <span class="date">2022/7/5</span>
+      async function viewTweet() {
+        let tweets = await getJson();
+        apendTweet(tweets);
+      }
+
+      async function getJson() {
+        let response = await(await fetch("http://192.168.0.90/timeline.json")).json()
+        return response
+      }
+
+      function apendTweet(tweets) {
+        tweets.forEach((tweet,i) => {
+          let template =`<div class="tweet">
+            <div class="icon">
+              <img src="./gogolumpj.webp" alt="">
+
             </div>
 
-            <div class="text">
-              ${tweet.text}
+            <div class="tweet_box">
+              <div class="username">
+                ${tweet.username}
+                <span class="name">@daiki</span>
+                <span class="date">2022/7/5</span>
+              </div>
+
+              <div class="text">
+                ${tweet.text}
+              </div>
+
+              <div class="action">
+                <span class="icon_chat">0</span>
+                <span class="icon_fav">0</span>
+                <span class="icon_res">0</span>
+                <span class="icon_share">0</span>
+
+              </div>
+
             </div>
 
-            <div class="action">
-              <span class="icon_chat">0</span>
-              <span class="icon_fav">0</span>
-              <span class="icon_res">0</span>
-              <span class="icon_share">0</span>
-
-            </div>
-
-          </div>
-
-        </div>`
-        timeline.innerHTML = timeline.innerHTML + template;
-      });
+          </div>`
+          timeline.innerHTML = timeline.innerHTML + template;
+        });
+      }
 
     </script>
 
