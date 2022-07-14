@@ -81,7 +81,7 @@
       <div id="timeline">
         <div class="tweet">
           <input type="text" id=input_text placeholder="ここに入力してください" name="" value=""/>
-          <button onclick="form_tweet()" type="submit"> 返信</button>
+          <button onclick="form_tweet()" type="submit"> 送信</button>
         </div>
 
       </div>
@@ -90,6 +90,7 @@
 
     <script type="text/javascript">
 
+      var username = "ゲンゲン"
       let timeline = document.getElementById('timeline');
     /*  let tweets = [{"text":"こんにちは","username":"gengen"},
                    {"text":"おはよう","username":"genmai"},
@@ -98,9 +99,18 @@
                    {"text":"ラッキーエアー","username":"genji"},
                    {"text":"インパクトフラッシュ","username":"gensan"},
                  ]; */
+
+      function form_tweet() {
+        let input_text = document.getElementById('input_text');
+        if (input_text.value != ""){
+          post_tweet(input_text.value,"timeline",username);
+          input_text.value = "";
+        }
+
+      }
       async function post_tweet(text,name,username) {
         let send_data = "?name=" + name +"&username=" + username + "&text=" + text;
-        let res_data = await (await fetch("./tweet.rb" + send_data)).text();
+        let res_data = await (await fetch("http://192.168.0.90/tweet.rb" + send_data)).text();
         if(res_data != "OK"){
           alert(res_data);
         }
@@ -129,7 +139,7 @@
             <div class="tweet_box">
               <div class="username">
                 ${tweet.username}
-                <span class="name">@daiki</span>
+                <span class="name">************</span>
                 <span class="date">2022/7/5</span>
               </div>
 
