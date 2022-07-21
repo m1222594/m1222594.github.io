@@ -72,6 +72,20 @@
             background-size: contain;
             background-repeat: no-repeat;
           }
+      .m-form-submit-button {
+            display: inline;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            background-color: rgb(29, 155, 240);
+            color: #fff;
+            font-weight: bold;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            border: 2px solid transparent;
+           }
 
 
     </style>
@@ -81,7 +95,7 @@
       <div id="timeline">
         <div class="tweet">
           <input type="text" id=input_text placeholder="ここに入力してください" name="" value=""/>
-          <button onclick="form_tweet()" type="submit"> 送信</button>
+          <button onclick="form_tweet()" type="submit" class="m-form-submit-button"> 送信</button>
         </div>
 
       </div>
@@ -120,7 +134,8 @@
 
       async function viewTweet() {
         let tweets = await getJson();
-        apendTweet(tweets);
+        appendTweet(tweets);
+        setTimeout(viewTweet,5000);
       }
 
       async function getJson() {
@@ -128,7 +143,14 @@
         return response
       }
 
-      function apendTweet(tweets) {
+      function appendTweet(tweets) {
+        let old_tweets = document.getElementsByClassName("tweet");
+        while(old_tweets.length > 2) {
+          old_tweets.item(1).remove();
+        }
+
+        let tmp_tweets = "";
+
         tweets.forEach((tweet,i) => {
           let template =`<div class="tweet">
             <div class="icon">
@@ -138,13 +160,13 @@
 
             <div class="tweet_box">
               <div class="username">
-                ${tweet.username}
+                ${escapeText(tweet.username)}
                 <span class="name">************</span>
                 <span class="date">2022/7/5</span>
               </div>
 
               <div class="text">
-                ${tweet.text}
+                ${escapeText(tweet.text)}
               </div>
 
               <div class="action">
@@ -158,10 +180,15 @@
             </div>
 
           </div>`
-          timeline.innerHTML = timeline.innerHTML + template;
+          tmp_tweets = tmp_tweets + template;
         });
+        timeline.innerHTML = timeline.innerHTML + tmp_tweets;
       }
-
+      function escapeText(text){
+        let element = document.createElement("div");
+        element.textContent = text;
+        return element.innerHTML.replace(/\n/g,"<br>");
+      }
     </script>
 
   </body>
